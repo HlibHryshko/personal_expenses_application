@@ -9,31 +9,32 @@ class ChartBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return LayoutBuilder(builder: (ctx, constraints){
+      return Column(
         children: [
           Container(
-            height: 20,
+            height: constraints.maxHeight * 0.15,
             child: FittedBox(
-                child: Text('€${amount.toStringAsFixed(0)}'),
+              child: Text('€${amount.toStringAsFixed(0)}'),
             ),
           ),
-          const SizedBox(
-            height: 5,
+          SizedBox(
+            height: constraints.maxHeight * 0.05,
           ),
           Container(
-            height: 50,
+            height: constraints.maxHeight * 0.6,
             width: 10,
             child: Stack(
               alignment: Alignment.bottomCenter,
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey,
-                      width: 1,
-                    ),
-                    color: Color.fromRGBO(220, 220, 220, 1),
-                    borderRadius: BorderRadius.circular(20)
+                      border: Border.all(
+                        color: Colors.grey,
+                        width: 1,
+                      ),
+                      color: Color.fromRGBO(220, 220, 220, 1),
+                      borderRadius: BorderRadius.circular(20)
                   ),
                 ),
                 FractionallySizedBox(
@@ -48,11 +49,17 @@ class ChartBar extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(
-            height: 5,
+          SizedBox(
+            height: constraints.maxHeight * 0.05,
           ),
-          Text(weekDay),
+          Container(
+              height: constraints.maxHeight * 0.15,
+              child: FittedBox(
+                  child: Text(weekDay),
+              ),
+          ),
         ],
-    );
+      );
+    });
   }
 }
