@@ -53,58 +53,65 @@ class _TransactionsFormState extends State<TransactionsForm> {
   @override
   Widget build(BuildContext context) {
 
-    return Card(
-      elevation: 5,
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            TextField(
-              decoration: const InputDecoration(
-                labelText: 'Title',
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 5,
+        child: Container(
+          padding: EdgeInsets.only(
+            top: 10,
+            left: 10,
+            right: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              TextField(
+                decoration: const InputDecoration(
+                  labelText: 'Title',
+                ),
+                controller: _titleController,
+                onSubmitted: (_) => _submitTransaction,
               ),
-              controller: _titleController,
-              onSubmitted: (_) => _submitTransaction,
-            ),
-            TextField(
-              decoration: const InputDecoration(
-                labelText: 'Amount',
+              TextField(
+                decoration: const InputDecoration(
+                  labelText: 'Amount',
+                ),
+                controller: _amountController,
+                keyboardType: TextInputType.number,
+                onSubmitted: (_) => _submitTransaction,
               ),
-              controller: _amountController,
-              keyboardType: TextInputType.number,
-              onSubmitted: (_) => _submitTransaction,
-            ),
-            Container(
-              height: 70,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      _selectedDate == null
-                        ?
-                      'No date chosen'
-                        :
-                         'Date picked: ${DateFormat('dd-MM-yyyy').format(_selectedDate!)}',
-                    ),
-                  ),
-                  TextButton(
-                      onPressed: _presentDatePicker,
+              Container(
+                height: 70,
+                child: Row(
+                  children: [
+                    Expanded(
                       child: Text(
-                          'Choose date',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                        _selectedDate == null
+                          ?
+                        'No date chosen'
+                          :
+                           'Date picked: ${DateFormat('dd-MM-yyyy').format(_selectedDate!)}',
+                      ),
+                    ),
+                    TextButton(
+                        onPressed: _presentDatePicker,
+                        child: Text(
+                            'Choose date',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            ElevatedButton(
-              onPressed: _submitTransaction,
-              child: Text('add transaction'),
-            ),
-          ],
+              ElevatedButton(
+                onPressed: _submitTransaction,
+                child: Text('add transaction'),
+              ),
+            ],
+          ),
         ),
       ),
     );
