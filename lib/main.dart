@@ -98,7 +98,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+    final mQuery = MediaQuery.of(context);
+    final isLandscape = mQuery.orientation == Orientation.landscape;
     final appBar = AppBar(
       title: const Text('Personal Expenses'),
       actions: [
@@ -112,9 +113,9 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     final transactionsListWidget = Container(
       height: (
-          MediaQuery.of(context).size.height
+          mQuery.size.height
               - appBar.preferredSize.height
-              - MediaQuery.of(context).padding.top
+              - mQuery.padding.top
       ) * 0.7,
       child: TransactionsList(_userTransactions, _deleteTransaction),
     );
@@ -128,9 +129,9 @@ class _MyHomePageState extends State<MyHomePage> {
             if (isLandscape)
               Container(
                 height: (
-                    MediaQuery.of(context).size.height
+                    mQuery.size.height
                         - appBar.preferredSize.height
-                        - MediaQuery.of(context).padding.top
+                        - mQuery.padding.top
                 ) * 0.2,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -150,9 +151,9 @@ class _MyHomePageState extends State<MyHomePage> {
             if (!isLandscape)
               Container(
                 height: (
-                    MediaQuery.of(context).size.height
+                    mQuery.size.height
                         - appBar.preferredSize.height
-                        - MediaQuery.of(context).padding.top
+                        - mQuery.padding.top
                 ) * 0.3,
                 child: Chart(_recentTransactions),
               ),
@@ -161,9 +162,9 @@ class _MyHomePageState extends State<MyHomePage> {
             if (isLandscape)
               _showChart ? Container(
                 height: (
-                    MediaQuery.of(context).size.height
+                    mQuery.size.height
                         - appBar.preferredSize.height
-                        - MediaQuery.of(context).padding.top
+                        - mQuery.padding.top
                 ) * 0.7,
                   child: Chart(_recentTransactions)
               ) : transactionsListWidget,
