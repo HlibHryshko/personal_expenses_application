@@ -121,54 +121,56 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     return Scaffold(
       appBar: appBar,
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            if (isLandscape)
-              Container(
-                height: (
-                    mQuery.size.height
-                        - appBar.preferredSize.height
-                        - mQuery.padding.top
-                ) * 0.2,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Show chart'),
-                    Switch(
-                        value: _showChart,
-                        onChanged: (val){
-                          setState(() {
-                            _showChart = val;
-                          });
-                        }
-                    ),
-                  ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              if (isLandscape)
+                Container(
+                  height: (
+                      mQuery.size.height
+                          - appBar.preferredSize.height
+                          - mQuery.padding.top
+                  ) * 0.2,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Show chart'),
+                      Switch(
+                          value: _showChart,
+                          onChanged: (val){
+                            setState(() {
+                              _showChart = val;
+                            });
+                          }
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            if (!isLandscape)
-              Container(
-                height: (
-                    mQuery.size.height
-                        - appBar.preferredSize.height
-                        - mQuery.padding.top
-                ) * 0.3,
-                child: Chart(_recentTransactions),
-              ),
-            if (!isLandscape)
-              transactionsListWidget,
-            if (isLandscape)
-              _showChart ? Container(
-                height: (
-                    mQuery.size.height
-                        - appBar.preferredSize.height
-                        - mQuery.padding.top
-                ) * 0.7,
-                  child: Chart(_recentTransactions)
-              ) : transactionsListWidget,
-          ],
+              if (!isLandscape)
+                Container(
+                  height: (
+                      mQuery.size.height
+                          - appBar.preferredSize.height
+                          - mQuery.padding.top
+                  ) * 0.3,
+                  child: Chart(_recentTransactions),
+                ),
+              if (!isLandscape)
+                transactionsListWidget,
+              if (isLandscape)
+                _showChart ? Container(
+                  height: (
+                      mQuery.size.height
+                          - appBar.preferredSize.height
+                          - mQuery.padding.top
+                  ) * 0.7,
+                    child: Chart(_recentTransactions)
+                ) : transactionsListWidget,
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
