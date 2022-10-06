@@ -50,23 +50,30 @@ class TransactionsList extends StatelessWidget {
       itemCount: userTransactions.length,
     )
     :
-    Column(
-      children: [
-        Text(
-          'No transactions added yet!',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Container(
-          height: 200,
-          child: Image.asset(
-            'assets/images/waiting.png',
-            fit: BoxFit.cover,
-          ),
-        ),
-      ],
+    LayoutBuilder(
+      builder: (ctx, constraints){
+        return Column(
+          children: [
+            Container(
+              height: constraints.maxHeight * 0.2,
+              child: Text(
+                'No transactions added yet!',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ),
+            SizedBox(
+              height: constraints.maxHeight*0.05,
+            ),
+            Container(
+              height: constraints.maxHeight*0.75,
+              child: Image.asset(
+                'assets/images/waiting.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
