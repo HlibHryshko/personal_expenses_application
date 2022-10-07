@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../models/transaction.dart';
+import './transaction_item.dart';
 
 class TransactionsList extends StatelessWidget {
   final List<TransactionModel> userTransactions;
@@ -15,53 +15,7 @@ class TransactionsList extends StatelessWidget {
         ?
     ListView.builder(
       itemBuilder: (context, index){
-        return Card(
-          elevation: 5,
-          margin: EdgeInsets.symmetric(
-            horizontal: 5,
-            vertical: 10,
-          ),
-          child: ListTile(
-            leading: Padding(
-              padding: EdgeInsets.all(5),
-              child: FittedBox(
-                child: CircleAvatar(
-                  radius: 30,
-                  child: Text('\$${userTransactions[index].amount}'),
-                ),
-              ),
-            ),
-            title: Text(
-              userTransactions[index].title,
-            ),
-            subtitle: Text(
-              DateFormat('dd-MM-yyyy').format(userTransactions[index].date),
-            ),
-            trailing: MediaQuery.of(context).size.width > 360 ?
-            TextButton.icon(
-                onPressed: () {
-                  deleteTransaction(userTransactions[index].id);
-                },
-                icon: Icon(
-                    Icons.delete,
-                  color: Colors.deepOrange,
-                ),
-                label: Text(
-                  'Delete',
-                  style: TextStyle(
-                    color: Colors.deepOrange,
-                  ),
-                ))
-                :
-            IconButton(
-              onPressed: (){
-                deleteTransaction(userTransactions[index].id);
-              },
-              icon: Icon(Icons.delete),
-              color: Colors.deepOrange,
-            ),
-          ),
-        );
+        return TransactionItem(userTransaction: userTransactions[index], deleteTransaction: deleteTransaction);
       },
       itemCount: userTransactions.length,
     )
