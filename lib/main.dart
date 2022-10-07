@@ -96,6 +96,53 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  List<Widget> _buildLandscapeContent(MediaQueryData mQuery, AppBar appBar, Widget transactionsListWidget) {
+    return [
+      Container(
+      height: (
+          mQuery.size.height
+              - appBar.preferredSize.height
+              - mQuery.padding.top
+      ) * 0.2,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Show chart'),
+          Switch(
+              value: _showChart,
+              onChanged: (val){
+                setState(() {
+                  _showChart = val;
+                });
+              }
+          ),
+        ],
+      ),
+    ),
+      _showChart ? Container(
+          height: (
+              mQuery.size.height
+                  - appBar.preferredSize.height
+                  - mQuery.padding.top
+          ) * 0.7,
+          child: Chart(_recentTransactions)
+      ) : transactionsListWidget,
+    ];
+  }
+
+  List<Widget> _buildPortraitContent(MediaQueryData mQuery, AppBar appBar, Widget transactionsListWidget) {
+    return [Container(
+        height: (
+            mQuery.size.height
+                - appBar.preferredSize.height
+                - mQuery.padding.top
+        ) * 0.3,
+        child: Chart(_recentTransactions),
+      ),
+      transactionsListWidget,
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final mQuery = MediaQuery.of(context);
@@ -128,47 +175,17 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               if (isLandscape)
-                Container(
-                  height: (
-                      mQuery.size.height
-                          - appBar.preferredSize.height
-                          - mQuery.padding.top
-                  ) * 0.2,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Show chart'),
-                      Switch(
-                          value: _showChart,
-                          onChanged: (val){
-                            setState(() {
-                              _showChart = val;
-                            });
-                          }
-                      ),
-                    ],
-                  ),
+                ..._buildLandscapeContent(
+                    mQuery,
+                    appBar,
+                    transactionsListWidget
                 ),
               if (!isLandscape)
-                Container(
-                  height: (
-                      mQuery.size.height
-                          - appBar.preferredSize.height
-                          - mQuery.padding.top
-                  ) * 0.3,
-                  child: Chart(_recentTransactions),
+                ..._buildPortraitContent(
+                    mQuery,
+                    appBar,
+                    transactionsListWidget
                 ),
-              if (!isLandscape)
-                transactionsListWidget,
-              if (isLandscape)
-                _showChart ? Container(
-                  height: (
-                      mQuery.size.height
-                          - appBar.preferredSize.height
-                          - mQuery.padding.top
-                  ) * 0.7,
-                    child: Chart(_recentTransactions)
-                ) : transactionsListWidget,
             ],
           ),
         ),
